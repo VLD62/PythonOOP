@@ -4,7 +4,7 @@ class Hero:
         self.level = level
 
     def __repr__(self):
-        return f"{self.name} of type {Hero.__class__.__name__} has level {self.level}"
+        return f"{self.username} of type {self.__class__.__name__} has level {self.level}"
 
 class Elf(Hero):
     def __init__(self, username, level):
