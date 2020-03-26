@@ -1,27 +1,52 @@
-ARR_SIZE = 1000
-REF = [1, 3, 4]
-ARR = [0] * ARR_SIZE
+bands_dict = {}
+input_string = input().split("; ")
+while not input_string[0] == "start of concert":
+    command = input_string[0]
+    band = input_string[1]
+    if command == "Add":
+        members = input_string[2].split(", ")
+        if not band in bands_dict:
+            bands_dict[band] = {"Members": members,
+                                "Minutes" : 0}
+        else:
+            for key, value in bands_dict.items():
+                if key == band:
+                    for member in members:
+                        if member not in value["Members"]:
+                            value["Members"].append(member)
+    if command == "Play":
+        minutes = int(input_string[2])
+        if not band in bands_dict:
+            bands_dict[band] = {"Members": [],
+                                "Minutes" : minutes}
+        else:
+            bands_dict[band]["Minutes"] += minutes
+    input_string = input().split("; ")
 
-def printCompositions(n, i):
-    if (n == 0):
-        printArray(ARR, i)
-    elif(n > 0):
-        for k in range(1, 4 + 1):
-            if k in REF:
-                ARR[i] = k
-                printCompositions(n - k, i + 1)
+input_band = input()
+total_time = 0
+for band, value in bands_dict.items():
+    total_time += value["Minutes"]
+print(f"Total time: {total_time}")
 
-def printArray(arr, arr_size):
-        temp_list = []
-        for i in range(arr_size):
-            temp_list.append(ARR[i])
-        if 3 in temp_list and 4 in temp_list and 1 in temp_list:
-            print(temp_list)
+for band, value in sorted(bands_dict.items(), key = lambda x: (-x[1]["Minutes"],x[0])):
+    print(f"{band} -> {value['Minutes']}")
 
+for band, value in bands_dict.items():
+    if band == input_band:
+        print(band)
+        for member in value["Members"]:
+            print(f"=> {member}")
+"""
 
-if __name__ == "__main__":
-    N = int(input())
-    print(
-        f"All the different ways the number {N} can be represented as the sum of 1,3 and 4 simultaneously are: ")
-    printCompositions(N, 0)
-    print(f"PTI4i KORONA GRIP VIRUS!")
+Play; The Beatles; 2584
+Add; The Beatles; John Lennon, Paul McCartney, George Harrison, Ringo Starr
+Add; Eagles; Glenn Frey, Don Henley, Bernie Leadon, Randy Meisner
+Play; Eagles; 1869
+Add; The Rolling Stones; Brian Jones, Mick Jagger, Keith Richards
+Add; The Rolling Stones; Brian Jones, Mick Jagger, Keith Richards, Bill Wyman, Charlie Watts, Ian Stewart
+Play; The Rolling Stones; 4239
+start of concert
+The Rolling Stones
+
+"""
