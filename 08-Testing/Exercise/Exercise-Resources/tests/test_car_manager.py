@@ -12,7 +12,6 @@ class TestCarManager(unittest.TestCase):
         self.car = Car(make="BMW", model="330d", fuel_consumption=9, fuel_capacity=50)
 
     def test_init(self):
-        bmw_car = Car(make="BMW", model="330d", fuel_consumption=9, fuel_capacity=50)
         self.assertEqual([self.car.make, self.car.model, self.car.fuel_consumption, \
             self.car.fuel_capacity], ["BMW", "330d", 9, 50])
 
