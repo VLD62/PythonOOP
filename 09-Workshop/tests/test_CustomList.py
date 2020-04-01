@@ -93,6 +93,9 @@ class TestCustomList(unittest.TestCase):
     def test_underbound(self):
         self.assertEqual(self.custom_list.underbound(), 3)
 
+    #TEST Abstraction:
+    # def test_underbound(self):
+    #     self.assertEqual(CustomList.__base__.__name__, "ABC")
 
 
 if __name__ == "__main__":

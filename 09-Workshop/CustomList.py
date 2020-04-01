@@ -114,4 +114,3 @@ class CustomList:
     def __repr__(self):
         self.listche = [str(x) for x in self.listche]
         return f'''['{"', '".join(self.listche)}']'''
-
