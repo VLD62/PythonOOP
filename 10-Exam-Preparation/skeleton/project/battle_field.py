@@ -1,11 +1,6 @@
-# import sys, os
-# currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-# parentdir = os.path.dirname(currentdir)
-# sys.path.insert(0,parentdir)
-
-from player.player_repository import PlayerRepository
-from player.player import Player
-from player.beginner import Beginner
+from project.player.player_repository import PlayerRepository
+from project.player.player import Player
+from project.player.beginner import Beginner
 
 
 class BattleField:

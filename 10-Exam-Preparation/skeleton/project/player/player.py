@@ -1,22 +1,31 @@
 from abc import ABC, abstractmethod
-
-# currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-# parentdir = os.path.dirname(currentdir)
-# sys.path.insert(0,parentdir)
-
-from card.card_repository import CardRepository
+from project.card.card_repository import CardRepository
 
 class Player(ABC):
 
-    card_repository = CardRepository()
-    is_dead = False
-
-    def __init__(self, username: str, health: int):
+    @abstractmethod
+    def __init__(self, username: str):
         self.username = username
-        self.health = health
+        self.health = 0
+        self.card_repository = CardRepository()
+
+    @property
+    def is_dead(self):
+        if self.health <= 0:
+            return True
+        return False
+
+    @property
+    def health(self):
+        return self.__health
+
+    @health.setter
+    def health(self, value):
+        if value < 0:
+            raise ValueError("Player's health bonus cannot be less than zero.")
+        self.__health = value
 
     def take_damage(self, damage_points: int):
-        if (self.health - damage_points) < 0:
+        if damage_points < 0:
             raise ValueError("Damage points cannot be less than zero.")
-        else:
-            self.health -= damage_points
+        self.health -= damage_points

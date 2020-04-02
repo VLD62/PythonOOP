@@ -1,6 +1,6 @@
-from player import Player
+from project.player.player import Player
 
-class PlayerRepository():
+class PlayerRepository:
 
     def __init__(self):
         self.count = 0
