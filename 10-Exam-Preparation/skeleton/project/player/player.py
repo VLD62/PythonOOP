@@ -5,9 +5,19 @@ class Player(ABC):
 
     @abstractmethod
     def __init__(self, username: str):
-        self.username = username
+        self.__username = username
         self.health = 0
         self.card_repository = CardRepository()
+
+    @property
+    def username(self):
+        return self.__username
+
+    @username.setter
+    def username(self, value):
+        if value == "":
+            raise ValueError("Player's username cannot be an empty string.")
+        self.__username = value
 
     @property
     def is_dead(self):

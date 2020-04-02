@@ -5,6 +5,9 @@ from project.player.beginner import Beginner
 
 class BattleField:
 
+    def __init__(self):
+        pass
+
     def calculate_total_damage(self, player: Player):
         total_damage  =  0
         for card in player.card_repository:
