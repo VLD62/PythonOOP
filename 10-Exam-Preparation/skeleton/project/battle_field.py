@@ -1,46 +1,32 @@
-from project.player.player_repository import PlayerRepository
 from project.player.player import Player
-from project.player.beginner import Beginner
 
 
 class BattleField:
+    @staticmethod
+    def get_bonus_health_damage(player: Player):
+        bonus_health = sum([card.health_points for card in player.card_repository.cards])
+        if player.__class__.__name__ == "Beginner":
+            bonus_health += 40
+            for card in player.card_repository.cards:
+                    card.damage_points += 30
+        return bonus_health
 
-    def __init__(self):
-        pass
-
-    def calculate_total_damage(self, player: Player):
-        total_damage  =  0
-        for card in player.card_repository:
-            total_damage += card.damage_points
-        return total_damage
-
-
-    def get_bonus_health(self, player: Player):
-        for card in player.card_repository:
-            player.health += card.health_points
-
-    def check_beginner(self, player: Player):
-        if isinstance(player, Beginner):
-            player.health += 40
-            for card in player.card_repository:
-                card.damage_points += 30
-
-    def fight(self, attacker: Player, enemy: Player):
+    @staticmethod
+    def fight(attacker: Player, enemy: Player):
         if attacker.is_dead or enemy.is_dead:
             raise ValueError("Player is dead!")
-        self.check_beginner(attacker)
-        self.check_beginner(enemy)
-        self.get_bonus_health(attacker)
-        self.get_bonus_health(enemy)
-        attacker_total_damage = self.calculate_total_damage(attacker)
-        enemy_total_damage = self.calculate_total_damage(enemy)
-        if attacker_total_damage >= enemy.health:
-            enemy.is_dead = True
-            return
-        else:
-            enemy.health -= attacker_total_damage
-        if enemy_total_damage >= attacker.health:
-            attacker.is_dead = True
-            return
-        else:
-            attacker.health -= enemy_total_damage
+
+        #Calculate bonus health and damage:
+        attacker.health += BattleField.get_bonus_health_damage(attacker)
+        enemy.health += BattleField.get_bonus_health_damage(enemy)
+
+        #Fight:
+        for card in attacker.card_repository.cards:
+            enemy.take_damage(card.damage_points)
+
+        for card in enemy.card_repository.cards:
+            attacker.take_damage(card.damage_points)
+
+
+
+

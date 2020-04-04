@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
 
 class Card(ABC):
-
-    def __init__(self, name: str):
+    @abstractmethod
+    def __init__(self, name: str, damage_points: int, health_points: int):
         self.name = name
-        self.damage_points = 0
-        self.health_points = 0
+        self.damage_points = damage_points
+        self.health_points = health_points
 
     @property
     def name(self):
